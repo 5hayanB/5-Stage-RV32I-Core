@@ -1,1 +1,1 @@
-# 5-Stage-RISC-V-Core
+# 5-Stage-RV32I-Core
