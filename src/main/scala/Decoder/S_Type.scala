@@ -5,8 +5,11 @@ import chisel3.util._
 
 class S_Type_IO extends Bundle
 {
+    // Input pins
     val in: UInt = Input(UInt(25.W))
     val en: Bool = Input(Bool())
+    
+    // Output pins
     val func3: UInt = Output(UInt(3.W))
     val rs1: UInt = Output(UInt(5.W))
     val rs2: UInt = Output(UInt(5.W))
@@ -24,7 +27,7 @@ class S_Type extends Module
     (
         io.in(24, 18),
         io.in(4, 0)
-    ).asSInt()))
+    ).asSInt))
     
     // Wiring the outputs
     when (en)

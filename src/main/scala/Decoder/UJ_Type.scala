@@ -5,8 +5,11 @@ import chisel3.util._
 
 class UJ_Type_IO extends Bundle
 {
+    // Input pins
     val in: UInt = Input(UInt(25.W))
     val en: Bool = Input(Bool())
+    
+    // Output pins
     val rd: UInt = Output(UInt(5.W))
     val imm: SInt = Output(SInt(20.W))
 }
@@ -23,7 +26,7 @@ class UJ_Type extends Module
         io.in(13),
         io.in(23, 14),
         "b0".U
-    ).asSInt()))
+    ).asSInt))
     
     // Wiring the outputs
     when (en)

@@ -4,8 +4,11 @@ import chisel3._
 
 class R_Type_IO extends Bundle
 {
+    // Input pins
     val in: UInt = Input(UInt(25.W))
     val en: Bool = Input(Bool())
+    
+    // Output pins
     val rd: UInt = Output(UInt(5.W))
     val func3: UInt = Output(UInt(3.W))
     val rs1: UInt = Output(UInt(5.W))

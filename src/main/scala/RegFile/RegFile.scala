@@ -4,10 +4,13 @@ import chisel3._
 
 class RegFile_IO extends Bundle
 {
+    // Input pins
     val rd_addr: UInt = Input(UInt(5.W))
     val rs1_addr: UInt = Input(UInt(5.W))
     val rs2_addr: UInt = Input(UInt(5.W))
     val rd_data: SInt = Input(SInt(32.W))
+    
+    // Output pins
     val rs1_data: SInt = Output(SInt(32.W))
     val rs2_data: SInt = Output(SInt(32.W))
 }
