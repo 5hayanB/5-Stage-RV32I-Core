@@ -11,7 +11,7 @@ import RegFile.RegFile
 import WriteBack.WriteBack
 import PipelineRegs._
 
-class Core extends Module
+class FiveStageCore extends Module
 {
     // Initializing the pins and modules
     val Fetch: Fetch = Module(new Fetch)
@@ -33,102 +33,98 @@ class Core extends Module
     ))
     val lui = WireInit(Decoder.io.imm << 12)
     val auipc: UInt = WireInit(Fetch.io.PC_out + (Decoder.io.imm.asUInt << 12))
-
+    
     // Loading assembly instructions
     loadMemoryFromFile(inst_memory, "assembly/hex_file.txt")
-
+    
     // Wiring the modules
-
+    
     // ld_str_memory
     when (ControlUnit.io.str_en)
     {
         ld_str_memory.write(ALU.io.out(23, 0), RegFile.io.rs2_data)
     }
-
+    
     Array(  // Inputs
+        // IF_ID
+        IF_ID.io.PC_in,
+        IF_ID.io.nPC_in,
+        IF_ID.io.inst_in,
+        
         // Decoder
         Decoder.io.in,
-
+        
+        // ID_EX
+        ID_EX.io.IF_ID_PC_in,
+        ID_EX.io.rd_addr_in,
+        ID_EX.io.func3_in,
+        ID_EX.io.rs1_addr_in,
+        ID_EX.io.rs2_addr_in,
+        ID_EX.io.rs1_data_in,
+        ID_EX.io.rs2_data_in,
+        ID_EX.io.func7_in,
+        ID_EX.io.imm_in,
+        ID_EX.io.ld_en_in,
+        ID_EX.io.str_en_in,
+        ID_EX.io.op2sel_in,
+        ID_EX.io.br_en_in,
+        ID_EX.io.jal_in,
+        ID_EX.io.jalr_in,
+        ID_EX.io.lui_in,
+        ID_EX.io.auipc_in,
+        
         // RegFile
         RegFile.io.rd_addr,
         RegFile.io.rs1_addr,
         RegFile.io.rs2_addr,
-        RegFile.io.rd_data,
-
-        // ALU
-        ALU.io.func3,
-        ALU.io.func7,
-        ALU.io.imm,
-        ALU.io.id,
-        ALU.io.rs1,
-        ALU.io.rs2,
-        ALU.io.op2sel,
-
-        // Fetch
-        Fetch.io.nPC_en,
-        Fetch.io.nPC_in,
-
+//        RegFile.io.rd_data,
+        
         // Control Unit
         ControlUnit.io.id,
-
-        // WriteBack
-        WriteBack.io.alu_in,
-        WriteBack.io.nPC,
-        WriteBack.io.nPC_en,
-        WriteBack.io.load_in,
-        WriteBack.io.ld_en,
-        WriteBack.io.br_en,
-
-        // IF_ID
-        IF_ID.io.PC_in,
-        IF_ID.io.nPC_in,
-        IF_ID.io.inst_in
     ) zip Array(  // Corresponding input wires
-        // Decoder
+        // IF_ID
+        Fetch.io.PC_out,
+        Fetch.io.nPC_out,
         inst_memory.read(Fetch.io.inst_out),
-
+        
+        // Decoder
+        IF_ID.io.inst_out,
+        
+        // ID_EX
+        IF_ID.io.PC_out,
+        Decoder.io.rd,
+        Decoder.io.func3,
+        Decoder.io.rs1,
+        Decoder.io.rs2,
+        RegFile.io.rs1_data,
+        RegFile.io.rs2_data,
+        Decoder.io.func7,
+        Decoder.io.imm,
+        ControlUnit.io.ld_en,
+        ControlUnit.io.str_en,
+        ControlUnit.io.op2sel,
+        ControlUnit.io.br_en,
+        ControlUnit.io.jal,
+        ControlUnit.io.jalr,
+        ControlUnit.io.lui,
+        ControlUnit.io.auipc,
+        
         // RegFile
         Decoder.io.rd,
         Decoder.io.rs1,
         Decoder.io.rs2,
-        Mux(
-            ControlUnit.io.jal || ControlUnit.io.jalr, Fetch.io.nPC_out.asSInt, Mux(
-                ControlUnit.io.lui, lui.asSInt, Mux(
-                    ControlUnit.io.auipc, auipc.asSInt, WriteBack.io.out
-                )
-            )
-        ),
-
-        // ALU
-        Decoder.io.func3,
-        Decoder.io.func7,
-        Decoder.io.imm,
-        Decoder.io.id,
-        RegFile.io.rs1_data,
-        RegFile.io.rs2_data,
-        ControlUnit.io.op2sel,
-
-        // Fetch
-        ControlUnit.io.jal || WriteBack.io.br_out || ControlUnit.io.jalr,
-        nPC,
-
+//        Mux(
+//            ControlUnit.io.jal || ControlUnit.io.jalr, Fetch.io.nPC_out.asSInt, Mux(
+//                ControlUnit.io.lui, lui.asSInt, Mux(
+//                    ControlUnit.io.auipc, auipc.asSInt, WriteBack.io.out
+//                )
+//            )
+//        ),
+        
         // Control Unit
         Decoder.io.id,
-
-        // WriteBack
-        ALU.io.out,
-        Fetch.io.PC_out,
-        ControlUnit.io.jal,
-        ld_str_memory.read(ALU.io.out(23, 0)),
-        ControlUnit.io.ld_en,
-        ControlUnit.io.br_en,
-
-        // IF_ID
-        Fetch.io.PC_out,
-        Fetch.io.nPC_out,
-        inst_memory.read(Fetch.io.inst_out)
     ) foreach
-    {
-        x => x._1 := x._2
-    }
+        {
+            x => x._1 := x._2
+        }
 }

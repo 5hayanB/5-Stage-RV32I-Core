@@ -12,7 +12,7 @@ class IF_ID_IO extends Bundle
     // Output pins
     val PC_out: UInt = Output(UInt(32.W))
     val nPC_out: SInt = Output(SInt(32.W))
-    val inst_out: SInt = Output(SInt(32.W))
+    val inst_out: UInt = Output(UInt(32.W))
 }
 class IF_ID extends Module
 {
