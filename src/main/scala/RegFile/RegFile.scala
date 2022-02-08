@@ -30,18 +30,19 @@ class RegFile extends Module
     // Writing to rd
     regFile.write(rd_addr, rd_data)
     
-    // Hard wiring 0 to x0
-//    regFile.write(0.U(5.W), 0.U(32.W))
-    
     // Wiring the outputs
-    Array(
-        io.rs1_data,
-        io.rs2_data,
-    ) zip Array(
-        rs1_data,
-        rs2_data
-    ) foreach
+    when (rs1_addr === 0.U)
     {
-        x => x._1 := x._2
+        io.rs1_data := 0.S
+    }.otherwise
+    {
+        io.rs1_data := rs1_data
+    }
+    when (rs2_addr === 0.U)
+    {
+        io.rs2_data := 0.S
+    }.otherwise
+    {
+        io.rs2_data := rs2_data
     }
 }

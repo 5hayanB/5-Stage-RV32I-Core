@@ -5,7 +5,8 @@ import chisel3._
 class ID_EX_IO extends Bundle
 {
     // Input pins
-    val IF_ID_PC_in: UInt = Input(UInt(32.W))
+    val PC_in: UInt = Input(UInt(32.W))
+    val nPC_in: UInt = Input(UInt(32.W))
     val rd_addr_in: UInt = Input(UInt(5.W))
     val func3_in: UInt = Input(UInt(3.W))
     val rs1_addr_in: UInt = Input(UInt(5.W))
@@ -22,9 +23,11 @@ class ID_EX_IO extends Bundle
     val jalr_in: Bool = Input(Bool())
     val lui_in: Bool = Input(Bool())
     val auipc_in: Bool = Input(Bool())
+    val id_in: UInt = Input(UInt(5.W))
     
     // Output pins
-    val IF_ID_PC_out: UInt = Output(UInt(32.W))
+    val PC_out: UInt = Output(UInt(32.W))
+    val nPC_out: UInt = Output(UInt(32.W))
     val rd_addr_out: UInt = Output(UInt(5.W))
     val func3_out: UInt = Output(UInt(3.W))
     val rs1_addr_out: UInt = Output(UInt(5.W))
@@ -37,16 +40,18 @@ class ID_EX_IO extends Bundle
     val str_en_out: Bool = Output(Bool())
     val op2sel_out: Bool = Output(Bool())
     val br_en_out: Bool = Output(Bool())
-    val jal_out: Bool = Input(Bool())
-    val jalr_out: Bool = Input(Bool())
-    val lui_out: Bool = Input(Bool())
-    val auipc_out: Bool = Input(Bool())
+    val jal_out: Bool = Output(Bool())
+    val jalr_out: Bool = Output(Bool())
+    val lui_out: Bool = Output(Bool())
+    val auipc_out: Bool = Output(Bool())
+    val id_out: UInt = Output(UInt(5.W))
 }
 class ID_EX extends Module
 {
     // Initializing the wires and modules
     val io: ID_EX_IO = IO(new ID_EX_IO)
-    val IF_ID_PC: UInt = dontTouch(RegInit(io.IF_ID_PC_in))
+    val PC: UInt = dontTouch(RegInit(io.PC_in))
+    val nPC: UInt = dontTouch(RegInit(io.nPC_in))
     val rd_addr: UInt = dontTouch(RegInit(io.rd_addr_in))
     val func3: UInt = dontTouch(RegInit(io.func3_in))
     val rs1_addr: UInt = dontTouch(RegInit(io.rs1_addr_in))
@@ -63,10 +68,12 @@ class ID_EX extends Module
     val jalr: Bool = dontTouch(RegInit(io.jalr_in))
     val lui: Bool = dontTouch(RegInit(io.lui_in))
     val auipc: Bool = dontTouch(RegInit(io.auipc_in))
+    val id: UInt = dontTouch(RegInit(io.id_in))
     
     // Wiring the outputs
     Array(
-        io.IF_ID_PC_out,
+        io.PC_out,
+        io.nPC_out,
         io.rd_addr_out,
         io.func3_out,
         io.rs1_addr_out,
@@ -82,9 +89,11 @@ class ID_EX extends Module
         io.jal_out,
         io.jalr_out,
         io.lui_out,
-        io.auipc_out
+        io.auipc_out,
+        io.id_out
     ) zip Array(
-        IF_ID_PC,
+        PC,
+        nPC,
         rd_addr,
         func3,
         rs1_addr,
@@ -100,7 +109,8 @@ class ID_EX extends Module
         jal,
         jalr,
         lui,
-        auipc
+        auipc,
+        id
     ) foreach
     {
         x => x._1 := x._2

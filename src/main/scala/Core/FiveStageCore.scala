@@ -37,12 +37,14 @@ class FiveStageCore extends Module
     // Loading assembly instructions
     loadMemoryFromFile(inst_memory, "assembly/hex_file.txt")
     
-    // Wiring the modules
+    /********************************************************************
+                            WIRING THE MODULES
+     ********************************************************************/
     
     // ld_str_memory
-    when (ControlUnit.io.str_en)
+    when (EX_MEM.io.str_en_out)
     {
-        ld_str_memory.write(ALU.io.out(23, 0), RegFile.io.rs2_data)
+        ld_str_memory.write(EX_MEM.io.alu_out(23, 0), EX_MEM.io.rs2_data_out)
     }
     
     Array(  // Inputs
@@ -74,13 +76,34 @@ class FiveStageCore extends Module
         ID_EX.io.auipc_in,
         
         // RegFile
-        RegFile.io.rd_addr,
+//        RegFile.io.rd_addr,
         RegFile.io.rs1_addr,
         RegFile.io.rs2_addr,
 //        RegFile.io.rd_data,
         
         // Control Unit
         ControlUnit.io.id,
+        
+        // ALU
+        ALU.io.rs1,
+        ALU.io.rs2,
+        ALU.io.imm,
+        ALU.io.func3,
+        ALU.io.func7,
+        ALU.io.id,
+        ALU.io.op2sel,
+        
+        // EX_MEM
+        EX_MEM.io.ld_en_in,
+        EX_MEM.io.str_en_in,
+        EX_MEM.io.alu_in,
+        EX_MEM.io.rs2_data_in,
+        EX_MEM.io.rd_addr_in,
+        EX_MEM.io.br_en_in,
+        EX_MEM.io.jal_in,
+        EX_MEM.io.jalr_in,
+        EX_MEM.io.lui_in,
+        EX_MEM.io.auipc_in,
     ) zip Array(  // Corresponding input wires
         // IF_ID
         Fetch.io.PC_out,
@@ -110,7 +133,7 @@ class FiveStageCore extends Module
         ControlUnit.io.auipc,
         
         // RegFile
-        Decoder.io.rd,
+//        Decoder.io.rd,
         Decoder.io.rs1,
         Decoder.io.rs2,
 //        Mux(
@@ -123,6 +146,27 @@ class FiveStageCore extends Module
         
         // Control Unit
         Decoder.io.id,
+        
+        // ALU
+        ID_EX.io.rs1_data_out,
+        ID_EX.io.rs2_data_out,
+        ID_EX.io.imm_out,
+        ID_EX.io.func3_out,
+        ID_EX.io.func7_out,
+        ID_EX.io.id_out,
+        ID_EX.io.op2sel_out,
+        
+        // EX_MEM
+        ID_EX.io.ld_en_out,
+        ID_EX.io.str_en_out,
+        ALU.io.out,
+        ID_EX.io.rs2_data_out,
+        ID_EX.io.rd_addr_out,
+        ID_EX.io.br_en_out,
+        ID_EX.io.jal_out,
+        ID_EX.io.jalr_out,
+        ID_EX.io.lui_out,
+        ID_EX.io.auipc_out
     ) foreach
         {
             x => x._1 := x._2
