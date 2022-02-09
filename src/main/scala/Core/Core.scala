@@ -118,7 +118,7 @@ class Core extends Module
         // WriteBack
         ALU.io.out,
         Fetch.io.PC_out,
-        ControlUnit.io.jal,
+        ControlUnit.io.jal || ControlUnit.io.jalr,
         ld_str_memory.read(ALU.io.out(23, 0)),
         ControlUnit.io.ld_en,
         ControlUnit.io.br_en,
