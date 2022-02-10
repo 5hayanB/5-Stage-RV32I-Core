@@ -4,10 +4,7 @@ import chisel3._
 
 class Decoder_IO extends Bundle
 {
-    // Input pins
     val in: UInt = Input(UInt(32.W))
-    
-    // Output pins
     val rd: UInt = Output(UInt(5.W))
     val func3: UInt = Output(UInt(3.W))
     val rs1: UInt = Output(UInt(5.W))
@@ -19,7 +16,7 @@ class Decoder_IO extends Bundle
 class Decoder extends Module
 {
     // Initializing modules and signals
-    val io: Decoder_IO = IO(new Decoder_IO)
+    val io: Decoder_IO = IO(new Decoder_IO())
     val inst = WireInit(io.in(31, 7))
     val id: UInt = dontTouch(WireInit(io.in(6, 2)))
     val r: R_Type = Module(new R_Type)

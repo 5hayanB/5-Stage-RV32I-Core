@@ -4,10 +4,7 @@ import chisel3._
 
 class ControlUnit_IO extends Bundle
 {
-    // Input pins
     val id: UInt = Input(UInt(5.W))
-    
-    // Output pins
     val ld_en: Bool = Output(Bool())
     val str_en: Bool = Output(Bool())
     val op2sel: Bool = Output(Bool())

@@ -4,15 +4,14 @@ import chisel3._
 
 class WriteBack_IO extends Bundle
 {
-    // Input pins
     val alu_in: SInt = Input(SInt(32.W))
     val nPC: UInt = Input(UInt(32.W))
     val nPC_en: Bool = Input(Bool())
     val load_in: SInt = Input(SInt(32.W))
     val ld_en: Bool = Input(Bool())
     val br_en: Bool = Input(Bool())
-    
-    // Output pins
+//    val auipc_in: SInt = Input(SInt(32.W))
+//    val lui_in: SInt = Input(SInt(32.W))
     val out: SInt = Output(SInt(32.W))
     val br_out: Bool = Output(Bool())
 }
@@ -32,7 +31,7 @@ class WriteBack extends Module
             io.br_out,
             io.out
         ) zip Array(
-            alu_in(0).asBool,
+            alu_in(0).asBool(),
             0.S
         ) foreach
         {
@@ -45,7 +44,7 @@ class WriteBack extends Module
             io.br_out
         ) zip Array(
             Mux(
-                nPC_en, (nPC + 4.U).asSInt, Mux(
+                nPC_en, (nPC + 4.U).asSInt(), Mux(
                     io.ld_en, io.load_in, io.alu_in
                 )
             ),

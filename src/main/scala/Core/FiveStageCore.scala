@@ -75,6 +75,7 @@ class FiveStageCore extends Module
         ID_EX.io.jalr_in,
         ID_EX.io.lui_in,
         ID_EX.io.auipc_in,
+        ID_EX.io.id_in,
         
         // RegFile
         RegFile.io.rd_addr,
@@ -164,6 +165,7 @@ class FiveStageCore extends Module
         ControlUnit.io.jalr,
         ControlUnit.io.lui,
         ControlUnit.io.auipc,
+        Decoder.io.id,
         
         // RegFile
         MEM_WB.io.rd_addr_out,
@@ -218,7 +220,7 @@ class FiveStageCore extends Module
         EX_MEM.io.nPC_out,
         EX_MEM.io.rs1_data_out,
         EX_MEM.io.imm_out,
-        EX_MEM.io.PC_out
+        EX_MEM.io.PC_out,
         
         // WriteBack
         MEM_WB.io.alu_out,

@@ -5,7 +5,6 @@ import chisel3.util._
 
 class ALU_IO extends Bundle
 {
-    // Input pins
     val rs1: SInt = Input(SInt(32.W))
     val rs2: SInt = Input(SInt(32.W))
     val imm: SInt = Input(SInt(32.W))
@@ -13,8 +12,6 @@ class ALU_IO extends Bundle
     val func7: UInt = Input(UInt(7.W))
     val id: UInt = Input(UInt(5.W))
     val op2sel: Bool = Input(Bool())
-    
-    // Output pins
     val out: SInt = Output(SInt(32.W))
 }
 class ALU extends Module
@@ -25,17 +22,17 @@ class ALU extends Module
     val opSel: UInt = dontTouch(WireInit(Cat(io.id(2), io.func7(5), io.func3)))
     val add: SInt = dontTouch(WireInit(io.rs1 + op2))
     val sub: SInt = dontTouch(WireInit(io.rs1 - op2))
-    val sll: SInt = dontTouch(WireInit((io.rs1 << op2(18, 0).asUInt).asSInt))
+    val sll: SInt = dontTouch(WireInit((io.rs1 << op2(18, 0).asUInt()).asSInt()))
     val lt: SInt = dontTouch(WireInit(Mux(io.rs1 < op2, 1.S, 0.S)))
-    val ltu: SInt = dontTouch(WireInit(Mux(io.rs1.asUInt < op2.asUInt, 1.S, 0.S)))
+    val ltu: SInt = dontTouch(WireInit(Mux(io.rs1.asUInt() < op2.asUInt(), 1.S, 0.S)))
     val xor: SInt = dontTouch(WireInit(io.rs1 ^ op2))
-    val srl: SInt = dontTouch(WireInit((io.rs1 >> op2(18, 0).asUInt).asSInt))
-    val sra: SInt = dontTouch(WireInit((io.rs1 >> op2(18, 0).asUInt).asSInt))
+    val srl: SInt = dontTouch(WireInit((io.rs1 >> op2(18, 0).asUInt()).asSInt()))
+    val sra: SInt = dontTouch(WireInit((io.rs1 >> op2(18, 0).asUInt()).asSInt()))
     val or: SInt = dontTouch(WireInit(io.rs1 | op2))
     val and: SInt = dontTouch(WireInit(io.rs1 & op2))
     val beq: SInt = dontTouch(WireInit(Mux(io.rs1 === op2, 1.S, 0.S)))
-    val bge: SInt = dontTouch(WireInit((io.rs1 >= op2).asSInt))
-    val bgeu: SInt = dontTouch(WireInit((io.rs1.asUInt >= op2.asUInt).asSInt))
+    val bge: SInt = dontTouch(WireInit((io.rs1 >= op2).asSInt()))
+    val bgeu: SInt = dontTouch(WireInit((io.rs1.asUInt() >= op2.asUInt()).asSInt()))
     val bne: SInt = dontTouch(WireInit(Mux(io.rs1 =/= op2, 1.S, 0.S)))
     
     // Selecting the operation output

@@ -5,11 +5,8 @@ import chisel3.util._
 
 class U_Type_IO extends Bundle
 {
-    // Input pins
     val in: UInt = Input(UInt(25.W))
     val en: Bool = Input(Bool())
-    
-    // Output pins
     val rd: UInt = Output(UInt(5.W))
     val imm: SInt = Output(SInt(20.W))
 }
@@ -19,7 +16,7 @@ class U_Type extends Module
     val io: U_Type_IO = IO(new U_Type_IO)
     val en: Bool = dontTouch(WireInit(io.en))
     val rd: UInt = dontTouch(WireInit(io.in(4, 0)))
-    val imm: SInt = dontTouch(WireInit(io.in(24, 5).asSInt))
+    val imm: SInt = dontTouch(WireInit(io.in(24, 5).asSInt()))
     
     // Wiring the outputs
     when (en)
