@@ -19,6 +19,7 @@ class EX_MEM_IO extends Bundle
     val auipc_in: Bool = Input(Bool())
     val PC_in: UInt = Input(UInt(32.W))
     val nPC_in: UInt = Input(UInt(32.W))
+    val write_en_in: Bool = Input(Bool())
     
     // Outputs
     val ld_en_out: Bool = Output(Bool())
@@ -35,6 +36,7 @@ class EX_MEM_IO extends Bundle
     val auipc_out: Bool = Output(Bool())
     val PC_out: UInt = Output(UInt(32.W))
     val nPC_out: UInt = Output(UInt(32.W))
+    val write_en_out: Bool = Output(Bool())
 }
 class EX_MEM extends Module
 {
@@ -54,6 +56,7 @@ class EX_MEM extends Module
     val auipc: Bool = dontTouch(RegInit(io.auipc_in))
     val PC: UInt = dontTouch(RegInit(io.PC_in))
     val nPC: UInt = dontTouch(RegInit(io.nPC_in))
+    val write_en: Bool = dontTouch(RegInit(io.write_en_in))
     
     // Wiring the outputs
     Array(
@@ -70,7 +73,8 @@ class EX_MEM extends Module
         io.lui_out,
         io.auipc_out,
         io.PC_out,
-        io.nPC_out
+        io.nPC_out,
+        io.write_en_out
     ) zip Array(
         ld_en,
         str_en,
@@ -85,7 +89,8 @@ class EX_MEM extends Module
         lui,
         auipc,
         PC,
-        nPC
+        nPC,
+        write_en
     ) foreach
     {
         x => x._1 := x._2

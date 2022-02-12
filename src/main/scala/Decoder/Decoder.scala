@@ -4,7 +4,10 @@ import chisel3._
 
 class Decoder_IO extends Bundle
 {
+    // Inputs
     val in: UInt = Input(UInt(32.W))
+    
+    // Outputs
     val rd: UInt = Output(UInt(5.W))
     val func3: UInt = Output(UInt(3.W))
     val rs1: UInt = Output(UInt(5.W))
@@ -12,6 +15,7 @@ class Decoder_IO extends Bundle
     val func7: UInt = Output(UInt(7.W))
     val imm: SInt = Output(SInt(32.W))
     val id: UInt = Output(UInt(5.W))
+    val write_en: Bool = Output(Bool())
 }
 class Decoder extends Module
 {
@@ -31,6 +35,21 @@ class Decoder extends Module
     val rs2: UInt = dontTouch(WireInit(r.io.rs2 | s.io.rs2 | sb.io.rs2))
     val func7: UInt = dontTouch(WireInit(r.io.func7))
     val imm: SInt = dontTouch(WireInit(i.io.imm | s.io.imm | sb.io.imm | u.io.imm | uj.io.imm))
+    val write_en: Bool = dontTouch(WireInit(
+        Mux(
+            id === 0.U ||
+                id === 4.U ||
+                id === 5.U ||
+                id === 6.U ||
+                id === 12.U ||
+                id === 13.U ||
+                id === 14.U ||
+                id === 25.U ||
+                id === 27.U,
+            1.B,
+            0.B
+        )
+    ))
     
     // Wiring the modules
     Array(
@@ -202,7 +221,8 @@ class Decoder extends Module
         io.rs2,
         io.func7,
         io.imm,
-        io.id
+        io.id,
+        io.write_en
     ) zip Array(
         rd,
         func3,
@@ -210,7 +230,8 @@ class Decoder extends Module
         rs2,
         func7,
         imm,
-        id
+        id,
+        write_en
     ) foreach
     {
         x => x._1 := x._2

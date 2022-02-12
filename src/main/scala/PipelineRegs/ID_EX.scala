@@ -24,6 +24,7 @@ class ID_EX_IO extends Bundle
     val lui_in: Bool = Input(Bool())
     val auipc_in: Bool = Input(Bool())
     val id_in: UInt = Input(UInt(5.W))
+    val write_en_in: Bool = Input(Bool())
     
     // Output pins
     val PC_out: UInt = Output(UInt(32.W))
@@ -45,6 +46,7 @@ class ID_EX_IO extends Bundle
     val lui_out: Bool = Output(Bool())
     val auipc_out: Bool = Output(Bool())
     val id_out: UInt = Output(UInt(5.W))
+    val write_en_out: Bool = Output(Bool())
 }
 class ID_EX extends Module
 {
@@ -69,6 +71,7 @@ class ID_EX extends Module
     val lui: Bool = dontTouch(RegInit(io.lui_in))
     val auipc: Bool = dontTouch(RegInit(io.auipc_in))
     val id: UInt = dontTouch(RegInit(io.id_in))
+    val write_en: Bool = dontTouch(RegInit(io.write_en_in))
     
     // Wiring the outputs
     Array(
@@ -90,7 +93,8 @@ class ID_EX extends Module
         io.jalr_out,
         io.lui_out,
         io.auipc_out,
-        io.id_out
+        io.id_out,
+        io.write_en_out
     ) zip Array(
         PC,
         nPC,
@@ -110,7 +114,8 @@ class ID_EX extends Module
         jalr,
         lui,
         auipc,
-        id
+        id,
+        write_en
     ) foreach
     {
         x => x._1 := x._2

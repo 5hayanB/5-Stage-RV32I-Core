@@ -23,11 +23,11 @@ class Core extends Module
     val ld_str_memory: Mem[SInt] = Mem(1024, SInt(32.W))
     val nPC: UInt = WireInit(Mux(
         ControlUnit.io.jalr,
-        (RegFile.io.rs1_data + Decoder.io.imm).asUInt(),
+        (RegFile.io.rs1_data + Decoder.io.imm).asUInt,
         Fetch.io.PC_out + Cat(Decoder.io.imm(31, 1), "b0".U)
     ))
     val lui = WireInit(Decoder.io.imm << 12)
-    val auipc: UInt = WireInit(Fetch.io.PC_out + (Decoder.io.imm.asUInt() << 12))
+    val auipc: UInt = WireInit(Fetch.io.PC_out + (Decoder.io.imm.asUInt << 12))
     
     // Loading assembly instructions
     loadMemoryFromFile(inst_memory, "assembly/hex_file.txt")
@@ -83,14 +83,22 @@ class Core extends Module
         Decoder.io.rs1,
         Decoder.io.rs2,
         Mux(
-            ControlUnit.io.jal || ControlUnit.io.jalr, Fetch.io.nPC_out.asSInt(), Mux(
-                ControlUnit.io.lui, lui.asSInt(), Mux(
-                    ControlUnit.io.auipc, auipc.asSInt(), WriteBack.io.out
+            ControlUnit.io.jal || ControlUnit.io.jalr, Fetch.io.nPC_out.asSInt, Mux(
+                ControlUnit.io.lui, lui.asSInt, Mux(
+                    ControlUnit.io.auipc, auipc.asSInt, WriteBack.io.out
                 )
             )
         ),
         Mux(
-            Decoder.io.id === 0.U || Decoder.io.id === 4.U || Decoder.io.id === 5.U || Decoder.io.id === 6.U || Decoder.io.id === 12.U || Decoder.io.id === 13.U || Decoder.io.id === 14.U || Decoder.io.id === 25.U || Decoder.io.id === 27.U,
+            Decoder.io.id === 0.U ||
+                Decoder.io.id === 4.U ||
+                Decoder.io.id === 5.U ||
+                Decoder.io.id === 6.U ||
+                Decoder.io.id === 12.U ||
+                Decoder.io.id === 13.U ||
+                Decoder.io.id === 14.U ||
+                Decoder.io.id === 25.U ||
+                Decoder.io.id === 27.U,
             1.B,
             0.B
         ),

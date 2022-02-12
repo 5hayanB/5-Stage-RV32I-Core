@@ -10,6 +10,7 @@ import Decoder.Decoder
 import RegFile.RegFile
 import WriteBack.WriteBack
 import PipelineRegs._
+import HazardModules._
 
 class FiveStageCore extends Module
 {
@@ -24,6 +25,7 @@ class FiveStageCore extends Module
     val ID_EX: ID_EX = Module(new ID_EX)
     val EX_MEM: EX_MEM = Module(new EX_MEM)
     val MEM_WB: MEM_WB = Module(new MEM_WB)
+    val ForwardUnit: ForwardUnit = Module(new ForwardUnit)
     val inst_memory: Mem[UInt] = Mem(1024, UInt(32.W))
     val ld_str_memory: Mem[SInt] = Mem(1024, SInt(32.W))
     val nPC: UInt = WireInit(Mux(
@@ -33,6 +35,13 @@ class FiveStageCore extends Module
     ))
     val lui = WireInit(MEM_WB.io.imm_out << 12)
     val auipc: UInt = WireInit(MEM_WB.io.PC_out + (MEM_WB.io.imm_out.asUInt << 12))
+    val rd_data = WireInit(Mux(
+        MEM_WB.io.jal_out || MEM_WB.io.jalr_out, MEM_WB.io.nPC_out.asSInt, Mux(
+            MEM_WB.io.lui_out, lui.asSInt, Mux(
+                MEM_WB.io.auipc_out, auipc.asSInt, WriteBack.io.out
+            )
+        )
+    ))
     
     // Loading assembly instructions
     loadMemoryFromFile(inst_memory, "assembly/hex_file.txt")
@@ -76,12 +85,14 @@ class FiveStageCore extends Module
         ID_EX.io.lui_in,
         ID_EX.io.auipc_in,
         ID_EX.io.id_in,
+        ID_EX.io.write_en_in,
         
         // RegFile
         RegFile.io.rd_addr,
         RegFile.io.rs1_addr,
         RegFile.io.rs2_addr,
         RegFile.io.rd_data,
+        RegFile.io.write_en,
         
         // Control Unit
         ControlUnit.io.id,
@@ -110,6 +121,7 @@ class FiveStageCore extends Module
         EX_MEM.io.rs1_data_in,
         EX_MEM.io.imm_in,
         EX_MEM.io.PC_in,
+        EX_MEM.io.write_en_in,
         
         // MEM_WB
         MEM_WB.io.rd_addr_in,
@@ -125,6 +137,7 @@ class FiveStageCore extends Module
         MEM_WB.io.rs1_data_in,
         MEM_WB.io.imm_in,
         MEM_WB.io.PC_in,
+        MEM_WB.io.write_en_in,
         
         // WriteBack
         WriteBack.io.alu_in,
@@ -136,7 +149,15 @@ class FiveStageCore extends Module
         
         // Fetch
         Fetch.io.nPC_in,
-        Fetch.io.nPC_en
+        Fetch.io.nPC_en,
+        
+        // Forward Unit
+        ForwardUnit.io.EX_MEM_rd_addr,
+        ForwardUnit.io.EX_MEM_write_en,
+        ForwardUnit.io.MEM_WB_rd_addr,
+        ForwardUnit.io.MEM_WB_write_en,
+        ForwardUnit.io.rs1_addr,
+        ForwardUnit.io.rs2_addr
     ) zip Array(  // Corresponding input wires
         // IF_ID
         Fetch.io.PC_out,
@@ -166,24 +187,22 @@ class FiveStageCore extends Module
         ControlUnit.io.lui,
         ControlUnit.io.auipc,
         Decoder.io.id,
+        Decoder.io.write_en,
         
         // RegFile
         MEM_WB.io.rd_addr_out,
         Decoder.io.rs1,
         Decoder.io.rs2,
-        Mux(
-            MEM_WB.io.jal_out || MEM_WB.io.jalr_out, MEM_WB.io.nPC_out.asSInt, Mux(
-                MEM_WB.io.lui_out, lui.asSInt, Mux(
-                    MEM_WB.io.auipc_out, auipc.asSInt, WriteBack.io.out
-                )
-            )
-        ),
+        rd_data,
         
         // Control Unit
         Decoder.io.id,
         
         // ALU
-        ID_EX.io.rs1_data_out,
+        MuxLookup(ForwardUnit.io.forward_op1, ID_EX.io.rs1_data_out, Array(
+            1.U -> EX_MEM.io.alu_out,
+            2.U -> rd_data,
+        )),
         ID_EX.io.rs2_data_out,
         ID_EX.io.imm_out,
         ID_EX.io.func3_out,
@@ -206,6 +225,7 @@ class FiveStageCore extends Module
         ID_EX.io.rs1_data_out,
         ID_EX.io.imm_out,
         ID_EX.io.PC_out,
+        ID_EX.io.write_en_out,
         
         // MEM_WB
         EX_MEM.io.rd_addr_out,
@@ -221,6 +241,7 @@ class FiveStageCore extends Module
         EX_MEM.io.rs1_data_out,
         EX_MEM.io.imm_out,
         EX_MEM.io.PC_out,
+        EX_MEM.io.write_en_out,
         
         // WriteBack
         MEM_WB.io.alu_out,
@@ -232,7 +253,15 @@ class FiveStageCore extends Module
         
         // Fetch
         nPC,
-        MEM_WB.io.jal_out || MEM_WB.io.jalr_out || MEM_WB.io.br_en_out
+        MEM_WB.io.jal_out || MEM_WB.io.jalr_out || MEM_WB.io.br_en_out,
+        
+        // Forward Unit
+        EX_MEM.io.rd_addr_out,
+        EX_MEM.io.write_en_out,
+        MEM_WB.io.rd_addr_out,
+        MEM_WB.io.write_en_out,
+        ID_EX.io.rs1_addr_out,
+        ID_EX.io.rs2_addr_out
     ) foreach
         {
             x => x._1 := x._2
