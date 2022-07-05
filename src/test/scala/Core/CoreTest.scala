@@ -9,8 +9,7 @@ class CoreTest extends FreeSpec with ChiselScalatestTester
     {
         test(new Core())
         {
-            z =>
-                z.clock.step(100)
+            z => z.clock.step(100)
         }
     }
 }

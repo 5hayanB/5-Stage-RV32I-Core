@@ -1,0 +1,36 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly FiveStageCore.FiveStageCoreTest -- -DwriteVcd=1, Some(8b96a833-3fce-49a0-a230-0bb84aac2418), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /home/cxg/Repositories/5-Stage-RV32I-Core/target/scala-2.12/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m'-P:chiselplugin:useBundlePlugin' is now default behavior, you can stop using the scalacOption.[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /home/cxg/Repositories/5-Stage-RV32I-Core/target/scala-2.12/test-classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m'-P:chiselplugin:useBundlePlugin' is now default behavior, you can stop using the scalacOption.[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/cxg/Repositories/5-Stage-RV32I-Core/src/test/scala/FiveStageCore/FiveStageCoreTest.scala:6:33: type FreeSpec in package scalatest is deprecated (since 3.1.0): The org.scalatest.FreeSpec trait has been moved and renamed. Please use org.scalatest.freespec.AnyFreeSpec instead. This can be rewritten automatically with autofix: https://github.com/scalatest/autofix/tree/master/3.1.x[0m
+[0m[[0m[33mwarn[0m] [0m[0mclass FiveStageCoreTest extends FreeSpec with ChiselScalatestTester[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mFiveStageCoreTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- FiveStageCore *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  chisel3.internal.ChiselException: Connection between sink (ControlUnit.io.id: IO[UInt<5>]) and source (FiveStageCore.?: OpResult[SInt]) failed @: Sink (UInt<5>) and Source (SInt) have different types.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at ... ()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCore.$anonfun$new$10(FiveStageCore.scala:288)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCore.$anonfun$new$10$adapted(FiveStageCore.scala:288)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.mutable.ArrayOps$ofRef.foreach(ArrayOps.scala:198)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCore.<init>(FiveStageCore.scala:288)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCoreTest.$anonfun$new$2(FiveStageCoreTest.scala:10)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at ... ()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at ... (Stack trace trimmed to user code only. Rerun with --full-stacktrace to see the full stack trace)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 837 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 0, failed 1, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 TEST FAILED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	FiveStageCore.FiveStageCoreTest[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtestOnly[0m) sbt.TestsFailedException: Tests unsuccessful[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 3 s, completed Jul 5, 2022, 6:43:11 PM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m

@@ -33,62 +33,38 @@ class ForwardUnit extends Module
 
     // EX_MEM Hazard
     when (
-        (io.EX_MEM_write_en === 1.B) &&
-            (io.EX_MEM_rd_addr =/= 0.U) &&
-            (io.EX_MEM_rd_addr === io.rs1_addr) &&
-            (io.EX_MEM_rd_addr === io.rs2_addr)
+        (io.EX_MEM_write_en === 1.B) && (io.EX_MEM_rd_addr =/= 0.U) && (io.EX_MEM_rd_addr === io.rs1_addr) && (io.EX_MEM_rd_addr === io.rs2_addr)
     ) {
         io.forward_op1 := 1.U
         io.forward_op2 := 1.U
     }.elsewhen (
-        (io.EX_MEM_write_en === 1.B) &&
-            (io.EX_MEM_rd_addr =/= 0.U) &&
-            (io.EX_MEM_rd_addr === io.rs1_addr)
+        (io.EX_MEM_write_en === 1.B) && (io.EX_MEM_rd_addr =/= 0.U) && (io.EX_MEM_rd_addr === io.rs1_addr)
     ) {
         io.forward_op1 := 1.U
     }.elsewhen (
-        (io.EX_MEM_write_en === 1.B) &&
-            (io.EX_MEM_rd_addr =/= 0.U) &&
-            (io.EX_MEM_rd_addr === io.rs2_addr)
+        (io.EX_MEM_write_en === 1.B) && (io.EX_MEM_rd_addr =/= 0.U) && (io.EX_MEM_rd_addr === io.rs2_addr)
     ) {
         io.forward_op2 := 1.U
     }
 
     // MEM_WB Hazard
     when (
-        (io.MEM_WB_write_en === 1.B) &&
-            (io.MEM_WB_rd_addr =/= 0.U) &&
-            !(
-                (io.EX_MEM_write_en === 1.B) &&
-                    (io.EX_MEM_rd_addr =/= 0.U) &&
-                    (io.EX_MEM_rd_addr === io.rs1_addr) &&
-                    (io.EX_MEM_rd_addr =/= io.rs2_addr)
-                ) &&
-            (io.MEM_WB_rd_addr === io.rs1_addr) &&
-            (io.MEM_WB_rd_addr === io.rs2_addr)
+        (io.MEM_WB_write_en === 1.B) && (io.MEM_WB_rd_addr =/= 0.U) && !(
+            (io.EX_MEM_write_en === 1.B) && (io.EX_MEM_rd_addr =/= 0.U) && (io.EX_MEM_rd_addr === io.rs1_addr) && (io.EX_MEM_rd_addr =/= io.rs2_addr)
+        ) && (io.MEM_WB_rd_addr === io.rs1_addr) && (io.MEM_WB_rd_addr === io.rs2_addr)
     ) {
         io.forward_op1 := 2.U
         io.forward_op2 := 2.U
     }.elsewhen (
-        (io.MEM_WB_write_en === 1.B) &&
-            (io.MEM_WB_rd_addr =/= 0.U) &&
-            !(
-                (io.EX_MEM_write_en === 1.B) &&
-                    (io.EX_MEM_rd_addr =/= 0.U) &&
-                    (io.EX_MEM_rd_addr === io.rs1_addr)
-                ) &&
-            (io.MEM_WB_rd_addr === io.rs1_addr)
+        (io.MEM_WB_write_en === 1.B) && (io.MEM_WB_rd_addr =/= 0.U) && !(
+            (io.EX_MEM_write_en === 1.B) && (io.EX_MEM_rd_addr =/= 0.U) && (io.EX_MEM_rd_addr === io.rs1_addr)
+        ) && (io.MEM_WB_rd_addr === io.rs1_addr)
     ) {
         io.forward_op1 := 2.U
     }.elsewhen (
-        (io.MEM_WB_write_en === 1.B) &&
-            (io.MEM_WB_rd_addr =/= 0.U) &&
-            !(
-                (io.EX_MEM_write_en === 1.B) &&
-                    (io.EX_MEM_rd_addr =/= 0.U) &&
-                    (io.EX_MEM_rd_addr === io.rs2_addr)
-                ) &&
-            (io.MEM_WB_rd_addr === io.rs2_addr)
+        (io.MEM_WB_write_en === 1.B) && (io.MEM_WB_rd_addr =/= 0.U) && !(
+            (io.EX_MEM_write_en === 1.B) && (io.EX_MEM_rd_addr =/= 0.U) && (io.EX_MEM_rd_addr === io.rs2_addr)
+        ) && (io.MEM_WB_rd_addr === io.rs2_addr)
     ) {
         io.forward_op2 := 2.U
     }

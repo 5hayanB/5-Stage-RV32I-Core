@@ -90,15 +90,7 @@ class Core extends Module
             )
         ),
         Mux(
-            Decoder.io.id === 0.U ||
-                Decoder.io.id === 4.U ||
-                Decoder.io.id === 5.U ||
-                Decoder.io.id === 6.U ||
-                Decoder.io.id === 12.U ||
-                Decoder.io.id === 13.U ||
-                Decoder.io.id === 14.U ||
-                Decoder.io.id === 25.U ||
-                Decoder.io.id === 27.U,
+            Decoder.io.id === 0.U || Decoder.io.id === 4.U || Decoder.io.id === 5.U || Decoder.io.id === 6.U || Decoder.io.id === 12.U || Decoder.io.id === 13.U || Decoder.io.id === 14.U || Decoder.io.id === 25.U || Decoder.io.id === 27.U,
             1.B,
             0.B
         ),

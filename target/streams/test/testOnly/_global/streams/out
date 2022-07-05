@@ -1,0 +1,23 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(FiveStageCore.FiveStageCoreTest, org.scalatest.tools.Framework$$anon$1@1deb3e85, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mFiveStageCoreTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- FiveStageCore *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  chisel3.internal.ChiselException: Connection between sink (ControlUnit.io.id: IO[UInt<5>]) and source (FiveStageCore.?: OpResult[SInt]) failed @: Sink (UInt<5>) and Source (SInt) have different types.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at ... ()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCore.$anonfun$new$10(FiveStageCore.scala:288)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCore.$anonfun$new$10$adapted(FiveStageCore.scala:288)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.mutable.ArrayOps$ofRef.foreach(ArrayOps.scala:198)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCore.<init>(FiveStageCore.scala:288)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at FiveStageCore.FiveStageCoreTest.$anonfun$new$2(FiveStageCoreTest.scala:10)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at ... ()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at ... (Stack trace trimmed to user code only. Rerun with --full-stacktrace to see the full stack trace)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 837 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 0, failed 1, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 TEST FAILED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	FiveStageCore.FiveStageCoreTest[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtestOnly[0m) sbt.TestsFailedException: Tests unsuccessful[0m

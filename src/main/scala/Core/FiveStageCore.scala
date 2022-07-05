@@ -1,4 +1,4 @@
-package Core
+package FiveStageCore
 
 import chisel3._
 import chisel3.util._
@@ -55,6 +55,29 @@ class FiveStageCore extends Module
     {
         ld_str_memory.write(EX_MEM.io.alu_out(23, 0).asUInt, EX_MEM.io.rs2_data_out)
     }
+
+    // ALU.io.rs2
+    when (ID_EX.io.op2sel_out === 1.B)
+    {
+        ALU.io.rs2 := ID_EX.io.imm_out
+        EX_MEM.io.rs2_data_in := MuxLookup(
+            ForwardUnit.io.forward_op2, ID_EX.io.rs2_data_out, Array(
+                1.U -> EX_MEM.io.alu_out,
+                2.U -> rd_data
+            )
+        )
+    }.otherwise
+    {
+        Seq(
+            ALU.io.rs2,
+            EX_MEM.io.rs2_data_in
+        ) map (_ :=  MuxLookup(
+            ForwardUnit.io.forward_op2, ID_EX.io.rs2_data_out, Array(
+                1.U -> EX_MEM.io.alu_out,
+                2.U -> rd_data
+            )
+        ))
+    }
     
     Array(  // Inputs
         // IF_ID
@@ -99,7 +122,6 @@ class FiveStageCore extends Module
         
         // ALU
         ALU.io.rs1,
-        ALU.io.rs2,
         ALU.io.imm,
         ALU.io.func3,
         ALU.io.func7,
@@ -201,9 +223,8 @@ class FiveStageCore extends Module
         // ALU
         MuxLookup(ForwardUnit.io.forward_op1, ID_EX.io.rs1_data_out, Array(
             1.U -> EX_MEM.io.alu_out,
-            2.U -> rd_data,
+            2.U -> rd_data
         )),
-        ID_EX.io.rs2_data_out,
         ID_EX.io.imm_out,
         ID_EX.io.func3_out,
         ID_EX.io.func7_out,
