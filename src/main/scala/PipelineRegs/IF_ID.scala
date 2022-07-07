@@ -24,13 +24,9 @@ class IF_ID extends Module
     
     // Wiring the outputs
     Array(
-        io.PC_out,
-        io.nPC_out,
-        io.inst_out
+        io.PC_out, io.nPC_out, io.inst_out
     ) zip Array(
-        PC,
-        nPC,
-        inst
+        PC,        nPC,        inst
     ) foreach
     {
         x => x._1 := x._2

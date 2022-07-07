@@ -37,15 +37,7 @@ class Decoder extends Module
     val imm: SInt = dontTouch(WireInit(i.io.imm | s.io.imm | sb.io.imm | u.io.imm | uj.io.imm))
     val write_en: Bool = dontTouch(WireInit(
         Mux(
-            id === 0.U ||
-                id === 4.U ||
-                id === 5.U ||
-                id === 6.U ||
-                id === 12.U ||
-                id === 13.U ||
-                id === 14.U ||
-                id === 25.U ||
-                id === 27.U,
+            id === 0.U || id === 4.U || id === 5.U || id === 6.U || id === 12.U || id === 13.U || id === 14.U || id === 25.U || id === 27.U,
             1.B,
             0.B
         )
@@ -53,19 +45,11 @@ class Decoder extends Module
     
     // Wiring the modules
     Array(
-        r.io.in,
-        i.io.in,
-        s.io.in,
-        sb.io.in,
-        u.io.in,
-        uj.io.in,
+        r.io.in,  i.io.in, s.io.in,
+        sb.io.in, u.io.in, uj.io.in,
     ) zip Array(
-        inst,
-        inst,
-        inst,
-        inst,
-        inst,
-        inst
+        inst,     inst,    inst,
+        inst,     inst,    inst
     ) foreach
     {
         x => x._1 := x._2
@@ -75,19 +59,11 @@ class Decoder extends Module
     when (id === 12.U || id === 14.U)  // Enabling R_Type
     {
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            1.B,
-            0.B,
-            0.B,
-            0.B,
-            0.B,
-            0.B
+            1.B,      0.B,     0.B,
+            0.B,      0.B,     0.B
         ) foreach
         {
             x => x._1 := x._2
@@ -95,19 +71,11 @@ class Decoder extends Module
     }.elsewhen (id === 0.U || id === 4.U || id === 25.U)  // Enabling I_Type
     {
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            0.B,
-            1.B,
-            0.B,
-            0.B,
-            0.B,
-            0.B
+            0.B,      1.B,     0.B,
+            0.B,      0.B,     0.B
         ) foreach
             {
                 x => x._1 := x._2
@@ -115,19 +83,11 @@ class Decoder extends Module
     }.elsewhen (id === 8.U)  // Enabling S_Type
     {
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            0.B,
-            0.B,
-            1.B,
-            0.B,
-            0.B,
-            0.B
+            0.B,      0.B,     1.B,
+            0.B,      0.B,     0.B
         ) foreach
             {
                 x => x._1 := x._2
@@ -135,19 +95,11 @@ class Decoder extends Module
     }.elsewhen (id === 24.U)  // Enabling SB_Type
     {
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            0.B,
-            0.B,
-            0.B,
-            1.B,
-            0.B,
-            0.B
+            0.B,      0.B,     0.B,
+            1.B,      0.B,     0.B
         ) foreach
             {
                 x => x._1 := x._2
@@ -155,19 +107,11 @@ class Decoder extends Module
     }.elsewhen(id === 5.U || id === 13.U)  // Enabling U_Type
     {
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            0.B,
-            0.B,
-            0.B,
-            0.B,
-            1.B,
-            0.B
+            0.B,      0.B,     0.B,
+            0.B,      1.B,     0.B
         ) foreach
             {
                 x => x._1 := x._2
@@ -175,38 +119,22 @@ class Decoder extends Module
     }.elsewhen (id === 27.U)  // Enabling UJ_Type
     {
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            0.B,
-            0.B,
-            0.B,
-            0.B,
-            0.B,
-            1.B
+            0.B,      0.B,     0.B,
+            0.B,      0.B,     1.B
         ) foreach
             {
                 x => x._1 := x._2
             }
     }otherwise(
         Array(
-            r.io.en,
-            i.io.en,
-            s.io.en,
-            sb.io.en,
-            u.io.en,
-            uj.io.en
+            r.io.en,  i.io.en, s.io.en,
+            sb.io.en, u.io.en, uj.io.en
         ) zip Array(
-            0.B,
-            0.B,
-            0.B,
-            0.B,
-            0.B,
-            0.B
+            0.B,      0.B,     0.B,
+            0.B,      0.B,     0.B
         ) foreach
             {
                 x => x._1 := x._2
@@ -215,23 +143,11 @@ class Decoder extends Module
     
     // Wiring the outputs
     Array(
-        io.rd,
-        io.func3,
-        io.rs1,
-        io.rs2,
-        io.func7,
-        io.imm,
-        io.id,
-        io.write_en
+        io.rd,    io.func3, io.rs1, io.rs2,
+        io.func7, io.imm,   io.id,  io.write_en
     ) zip Array(
-        rd,
-        func3,
-        rs1,
-        rs2,
-        func7,
-        imm,
-        id,
-        write_en
+        rd,       func3,    rs1,    rs2,
+        func7,    imm,      id,     write_en
     ) foreach
     {
         x => x._1 := x._2

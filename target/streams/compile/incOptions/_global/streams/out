@@ -1,8 +1,11 @@
-[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/cxg/Repositories/5-Stage-RV32I-Core/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/cybergai/Repositories/5-Stage-RV32I-Core/target/scala-2.12/classes.bak[0m
 [0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	FiveStageCore.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ControlUnit.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ControlUnit_IO.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	FiveStageCore.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ControlUnit.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ControlUnit_IO.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	FiveStageCore.class[0m
-[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/cxg/Repositories/5-Stage-RV32I-Core/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ControlUnit.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ControlUnit_IO.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/cybergai/Repositories/5-Stage-RV32I-Core/target/scala-2.12/classes.bak[0m

@@ -1,1 +1,1 @@
-["Core.CoreTest","FiveStageCore.FiveStageCoreTest"]
+["FiveStageCore.FiveStageCoreTest","Core.CoreTest"]

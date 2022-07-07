@@ -5,8 +5,11 @@ import chisel3.util._
 
 class Fetch_IO extends Bundle
 {
+    // Input pins
     val nPC_in: UInt = Input(UInt(32.W))
     val nPC_en: Bool = Input(Bool())
+
+    // Output pins
     val inst_out: UInt = Output(UInt(24.W))
     val PC_out: UInt = Output(UInt(32.W))
     val nPC_out: UInt = Output(UInt(32.W))
