@@ -30,7 +30,9 @@ class RegFile extends Module
     {
         regFile.write(rd_addr, rd_data)
     }
-    // Wiring the outputs
+
+    // WIRING THE OUTPUT
+    
     // rs1
     when (rs1_addr === 0.U)
     {

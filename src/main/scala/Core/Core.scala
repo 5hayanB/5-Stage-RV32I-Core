@@ -32,7 +32,7 @@ class Core extends Module
     // Loading assembly instructions
     loadMemoryFromFile(inst_memory, "assembly/hex_file.txt")
     
-    // Wiring the modules
+    // WIRING THE MODULES
     
     // ld_str_memory
     when (ControlUnit.io.str_en)

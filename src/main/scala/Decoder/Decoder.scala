@@ -44,16 +44,10 @@ class Decoder extends Module
     ))
     
     // Wiring the modules
-    Array(
+    Seq(
         r.io.in,  i.io.in, s.io.in,
         sb.io.in, u.io.in, uj.io.in,
-    ) zip Array(
-        inst,     inst,    inst,
-        inst,     inst,    inst
-    ) foreach
-    {
-        x => x._1 := x._2
-    }
+    ) map (_ := inst)
     
     // Setting up the enables
     when (id === 12.U || id === 14.U)  // Enabling R_Type

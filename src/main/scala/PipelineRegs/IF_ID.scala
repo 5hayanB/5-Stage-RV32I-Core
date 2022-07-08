@@ -23,12 +23,15 @@ class IF_ID extends Module
     val inst: UInt = dontTouch(RegInit(io.inst_in))
     
     // Wiring the outputs
-    Array(
-        io.PC_out, io.nPC_out, io.inst_out
-    ) zip Array(
-        PC,        nPC,        inst
-    ) foreach
-    {
-        x => x._1 := x._2
-    }
+    io.PC_out := PC
+    io.nPC_out := nPC
+    io.inst_out := inst
+    // Array(
+    //     io.PC_out, io.nPC_out, io.inst_out
+    // ) zip Array(
+    //     PC,        nPC,        inst
+    // ) foreach
+    // {
+    //     x => x._1 := x._2
+    // }
 }

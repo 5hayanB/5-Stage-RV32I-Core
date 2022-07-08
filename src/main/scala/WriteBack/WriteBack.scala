@@ -4,6 +4,7 @@ import chisel3._
 
 class WriteBack_IO extends Bundle
 {
+    // Input pins
     val alu_in: SInt = Input(SInt(32.W))
     val nPC: UInt = Input(UInt(32.W))
     val nPC_en: Bool = Input(Bool())
@@ -12,6 +13,8 @@ class WriteBack_IO extends Bundle
     val br_en: Bool = Input(Bool())
 //    val auipc_in: SInt = Input(SInt(32.W))
 //    val lui_in: SInt = Input(SInt(32.W))
+    
+    // Output pins
     val out: SInt = Output(SInt(32.W))
     val br_out: Bool = Output(Bool())
 }
