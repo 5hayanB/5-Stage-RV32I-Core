@@ -58,39 +58,27 @@ class EX_MEM extends Module
     val nPC: UInt = dontTouch(RegInit(io.nPC_in))
     val write_en: Bool = dontTouch(RegInit(io.write_en_in))
     
-    // Wiring the outputs
+    // Wiring the modules
     Array(
-        io.ld_en_out,
-        io.str_en_out,
-        io.rd_addr_out,
-        io.rs1_data_out,
-        io.rs2_data_out,
-        io.imm_out,
-        io.alu_out,
-        io.br_en_out,
-        io.jal_out,
-        io.jalr_out,
-        io.lui_out,
-        io.auipc_out,
-        io.PC_out,
-        io.nPC_out,
-        io.write_en_out
-    ) zip Array(
-        ld_en,
-        str_en,
-        rd_addr,
-        rs1_data,
-        rs2_data,
-        imm,
-        alu,
-        br_en,
-        jal,
-        jalr,
-        lui,
-        auipc,
-        PC,
-        nPC,
-        write_en
+        // Output ports
+        io.ld_en_out, io.str_en_out, io.rd_addr_out, io.rs1_data_out, io.rs2_data_out,
+        io.imm_out,   io.alu_out,    io.br_en_out,   io.jal_out,      io.jalr_out,
+        io.lui_out,   io.auipc_out,  io.PC_out,      io.nPC_out,      io.write_en_out,
+
+        // Registers
+        ld_en,        str_en,        rd_addr,        rs1_data,        rs2_data,
+        imm,          alu,           br_en,          jal,             jalr,
+        lui,          auipc,         PC,             nPC,             write_en
+    ) zip Array(  // Corresponding wires
+        // Output wires
+        ld_en,        str_en,        rd_addr,        rs1_data,        rs2_data,
+        imm,          alu,           br_en,          jal,             jalr,
+        lui,          auipc,         PC,             nPC,             write_en,
+
+        // Registers
+        io.ld_en_in,        io.str_en_in,        io.rd_addr_in,        io.rs1_data_in,        io.rs2_data_in,
+        io.imm_in,          io.alu_in,           io.br_en_in,          io.jal_in,             io.jalr_in,
+        io.lui_in,          io.auipc_in,         io.PC_in,             io.nPC_in,             io.write_en_in
     ) foreach
     {
         x => x._1 := x._2

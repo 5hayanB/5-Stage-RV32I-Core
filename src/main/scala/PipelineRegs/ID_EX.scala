@@ -73,51 +73,54 @@ class ID_EX extends Module
     val id: UInt = dontTouch(RegInit(io.id_in))
     val write_en: Bool = dontTouch(RegInit(io.write_en_in))
     
-    // Wiring the outputs
+    // Wiring the modules
     Array(
-        io.PC_out,
-        io.nPC_out,
-        io.rd_addr_out,
-        io.func3_out,
-        io.rs1_addr_out,
-        io.rs2_addr_out,
-        io.rs1_data_out,
-        io.rs2_data_out,
-        io.func7_out,
-        io.imm_out,
-        io.ld_en_out,
-        io.str_en_out,
-        io.op2sel_out,
-        io.br_en_out,
-        io.jal_out,
-        io.jalr_out,
-        io.lui_out,
-        io.auipc_out,
-        io.id_out,
-        io.write_en_out
-    ) zip Array(
-        PC,
-        nPC,
-        rd_addr,
-        func3,
-        rs1_addr,
-        rs2_addr,
-        rs1_data,
-        rs2_data,
-        func7,
-        imm,
-        ld_en,
-        str_en,
-        op2sel,
-        br_en,
-        jal,
-        jalr,
-        lui,
-        auipc,
-        id,
-        write_en
+        // Output ports
+        io.PC_out,       io.nPC_out,      io.rd_addr_out,  io.func3_out, io.rs1_addr_out,
+        io.rs2_addr_out, io.rs1_data_out, io.rs2_data_out, io.func7_out, io.imm_out,
+        io.ld_en_out,    io.str_en_out,   io.op2sel_out,   io.br_en_out, io.jal_out,
+        io.jalr_out,     io.lui_out,      io.auipc_out,    io.id_out,    io.write_en_out,
+
+        // Registers
+        PC,              nPC,             rd_addr,         func3,        rs1_addr,
+        rs2_addr,        rs1_data,        rs2_data,        func7,        imm,
+        ld_en,           str_en,          op2sel,          br_en,        jal,
+        jalr,            lui,             auipc,           id,           write_en
+    ) zip Array(  // Corresponding wires
+        // Output ports
+        PC,              nPC,             rd_addr,         func3,        rs1_addr,
+        rs2_addr,        rs1_data,        rs2_data,        func7,        imm,
+        ld_en,           str_en,          op2sel,          br_en,        jal,
+        jalr,            lui,             auipc,           id,           write_en,
+
+        // Registers
+        io.PC_in,              io.nPC_in,             io.rd_addr_in,         io.func3_in,        io.rs1_addr_in,
+        io.rs2_addr_in,        io.rs1_data_in,        io.rs2_data_in,        io.func7_in,        io.imm_in,
+        io.ld_en_in,           io.str_en_in,          io.op2sel_in,          io.br_en_in,        io.jal_in,
+        io.jalr_in,            io.lui_in,             io.auipc_in,           io.id_in,           io.write_en_in
     ) foreach
     {
         x => x._1 := x._2
     }
 }
+
+// PC,
+//         nPC,
+//         rd_addr,
+//         func3,
+//         rs1_addr,
+//         rs2_addr,
+//         rs1_data,
+//         rs2_data,
+//         func7,
+//         imm,
+//         ld_en,
+//         str_en,
+//         op2sel,
+//         br_en,
+//         jal,
+//         jalr,
+//         lui,
+//         auipc,
+//         id,
+//         write_en

@@ -57,35 +57,25 @@ class MEM_WB extends Module
     
     // Wiring the outputs
     Array(
-        io.rd_addr_out,
-        io.rs1_data_out,
-        io.imm_out,
-        io.alu_out,
-        io.load_out,
-        io.ld_en_out,
-        io.br_en_out,
-        io.jal_out,
-        io.jalr_out,
-        io.lui_out,
-        io.auipc_out,
-        io.PC_out,
-        io.nPC_out,
-        io.write_en_out
-    ) zip Array(
-        rd_addr,
-        rs1_data,
-        imm,
-        alu,
-        load,
-        load_en,
-        br_en,
-        jal,
-        jalr,
-        lui,
-        auipc,
-        PC,
-        nPC,
-        write_en
+        // Output ports
+        io.rd_addr_out, io.rs1_data_out, io.imm_out, io.alu_out,      io.load_out,
+        io.ld_en_out,   io.br_en_out,    io.jal_out, io.jalr_out,     io.lui_out,
+        io.auipc_out,   io.PC_out,       io.nPC_out, io.write_en_out,
+
+        // Registers
+        rd_addr,        rs1_data,        imm,        alu,             load,
+        load_en,        br_en,           jal,        jalr,            lui,
+        auipc,          PC,              nPC,        write_en
+    ) zip Array(  // Corresponding wires
+        // Output ports
+        rd_addr,        rs1_data,        imm,        alu,             load,
+        load_en,        br_en,           jal,        jalr,            lui,
+        auipc,          PC,              nPC,        write_en,
+
+        // Registers
+        io.rd_addr_in,  io.rs1_data_in,  io.imm_in,  io.alu_in,       io.load_in,
+        io.ld_en_in,    io.br_en_in,     io.jal_in,  io.jalr_in,      io.lui_in,
+        io.auipc_in,    io.PC_in,        io.nPC_in,  io.write_en_in
     ) foreach
     {
         x => x._1 := x._2
