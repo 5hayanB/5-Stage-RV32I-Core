@@ -9,5 +9,6 @@
 # jal FIBONACCI_LOOP
 # END:
 
-addi x2, x0, 7
-addi x3, x0, 6
+addi t1, x0, 5
+addi t2, x0, 6
+add t3, t2, t3
