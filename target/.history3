@@ -4,3 +4,5 @@
 1657027513870:testOnly Core.FiveStageCore -- -DwriteVcd=1
 1657028543181:testOnly Core.FiveStageCoreTest -- -DwriteVcd=1
 1657028588386:testOnly FiveStageCore.FiveStageCoreTest -- -DwriteVcd=1
+1657539024930:testOnly Core.FiveStageCoreTest -- -DwriteVcd=1
+1657539161532:testOnly FiveStageCore.FiveStageCoreTest -- -DwriteVcd=1

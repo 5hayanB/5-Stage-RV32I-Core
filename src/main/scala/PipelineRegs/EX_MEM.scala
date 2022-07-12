@@ -76,9 +76,9 @@ class EX_MEM extends Module
         lui,          auipc,         PC,             nPC,             write_en,
 
         // Registers
-        io.ld_en_in,        io.str_en_in,        io.rd_addr_in,        io.rs1_data_in,        io.rs2_data_in,
-        io.imm_in,          io.alu_in,           io.br_en_in,          io.jal_in,             io.jalr_in,
-        io.lui_in,          io.auipc_in,         io.PC_in,             io.nPC_in,             io.write_en_in
+        io.ld_en_in,  io.str_en_in,  io.rd_addr_in,  io.rs1_data_in,  io.rs2_data_in,
+        io.imm_in,    io.alu_in,     io.br_en_in,    io.jal_in,       io.jalr_in,
+        io.lui_in,    io.auipc_in,   io.PC_in,       io.nPC_in,       io.write_en_in
     ) foreach
     {
         x => x._1 := x._2

@@ -35,7 +35,7 @@ class FiveStageCore extends Module
     ))
     val lui = WireInit(MEM_WB.io.imm_out << 12)
     val auipc: UInt = WireInit(MEM_WB.io.PC_out + (MEM_WB.io.imm_out.asUInt << 12))
-    val rd_data = WireInit(Mux(
+    val rd_data: SInt = WireInit(Mux(
         MEM_WB.io.jal_out || MEM_WB.io.jalr_out, MEM_WB.io.nPC_out.asSInt, Mux(
             MEM_WB.io.lui_out, lui.asSInt, Mux(
                 MEM_WB.io.auipc_out, auipc.asSInt, WriteBack.io.out
@@ -56,10 +56,10 @@ class FiveStageCore extends Module
         ld_str_memory.write(EX_MEM.io.alu_out(23, 0).asUInt, EX_MEM.io.rs2_data_out)
     }
 
-    // ALU.io.rs2
+    // ALU.io.op2
     when (ID_EX.io.op2sel_out === 1.B)
     {
-        ALU.io.rs2 := ID_EX.io.imm_out
+        ALU.io.op2 := ID_EX.io.imm_out
         EX_MEM.io.rs2_data_in := MuxLookup(
             ForwardUnit.io.forward_op2, ID_EX.io.rs2_data_out, Array(
                 1.U -> EX_MEM.io.alu_out,
@@ -69,7 +69,7 @@ class FiveStageCore extends Module
     }.otherwise
     {
         Seq(
-            ALU.io.rs2,
+            ALU.io.op2,
             EX_MEM.io.rs2_data_in
         ) map (_ :=  MuxLookup(
             ForwardUnit.io.forward_op2, ID_EX.io.rs2_data_out, Array(
@@ -100,8 +100,8 @@ class FiveStageCore extends Module
         ControlUnit.io.id,
         
         // ALU
-        ALU.io.rs1,                     ALU.io.imm,                     ALU.io.func3,
-        ALU.io.func7,                   ALU.io.id,                      ALU.io.op2sel,
+        ALU.io.ID_EX_rs1_data,          ALU.io.EX_MEM_alu_out,          ALU.io.func3,                                 ALU.io.rd_data,
+        ALU.io.func7,                   ALU.io.id,                      ALU.io.forward_op1,
         
         // EX_MEM
         EX_MEM.io.ld_en_in,             EX_MEM.io.str_en_in,            EX_MEM.io.alu_in,                             EX_MEM.io.rs2_data_in, EX_MEM.io.rd_addr_in,
@@ -122,7 +122,7 @@ class FiveStageCore extends Module
         
         // Forward Unit
         ForwardUnit.io.EX_MEM_rd_addr,  ForwardUnit.io.EX_MEM_write_en, ForwardUnit.io.MEM_WB_rd_addr,
-        ForwardUnit.io.MEM_WB_write_en, ForwardUnit.io.rs1_addr,        ForwardUnit.io.rs2_addr
+        ForwardUnit.io.MEM_WB_write_en, ForwardUnit.io.ID_EX_rs1_addr,        ForwardUnit.io.ID_EX_rs2_addr
     ) zip Array(  // Corresponding input wires
         // IF_ID
         Fetch.io.PC_out,                Fetch.io.nPC_out,               inst_memory.read(Fetch.io.inst_out),
@@ -144,12 +144,8 @@ class FiveStageCore extends Module
         Decoder.io.id,
         
         // ALU
-        MuxLookup(ForwardUnit.io.forward_op1, ID_EX.io.rs1_data_out, Array(
-            1.U -> EX_MEM.io.alu_out,
-            2.U -> rd_data
-        )),
-        ID_EX.io.imm_out,               ID_EX.io.func3_out,             ID_EX.io.func7_out,
-        ID_EX.io.id_out,                ID_EX.io.op2sel_out,
+        ID_EX.io.rs1_data_out,          EX_MEM.io.alu_out,              ID_EX.io.func3_out,                           rd_data,
+        ID_EX.io.func7_out,             ID_EX.io.id_out,                ForwardUnit.io.forward_op1,
         
         // EX_MEM
         ID_EX.io.ld_en_out,             ID_EX.io.str_en_out,            ALU.io.out,                                   ID_EX.io.rs2_data_out, ID_EX.io.rd_addr_out,

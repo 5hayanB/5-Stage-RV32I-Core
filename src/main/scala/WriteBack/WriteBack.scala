@@ -31,11 +31,9 @@ class WriteBack extends Module
     when (br_en)
     {
         Array(
-            io.br_out,
-            io.out
+            io.br_out,          io.out
         ) zip Array(
-            alu_in(0).asBool(),
-            0.S
+            alu_in(0).asBool(), 0.S
         ) foreach
         {
             x => x._1 := x._2

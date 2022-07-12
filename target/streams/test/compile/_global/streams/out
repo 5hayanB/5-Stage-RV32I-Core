@@ -1,8 +1,1 @@
 [0m[[0m[33mwarn[0m] [0m[0m'-P:chiselplugin:useBundlePlugin' is now default behavior, you can stop using the scalacOption.[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/test/scala/Core/CoreTest.scala:6:24: type FreeSpec in package scalatest is deprecated (since 3.1.0): The org.scalatest.FreeSpec trait has been moved and renamed. Please use org.scalatest.freespec.AnyFreeSpec instead. This can be rewritten automatically with autofix: https://github.com/scalatest/autofix/tree/master/3.1.x[0m
-[0m[[0m[33mwarn[0m] [0m[0mclass CoreTest extends FreeSpec with ChiselScalatestTester[0m
-[0m[[0m[33mwarn[0m] [0m[0m                       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/test/scala/FiveStageCore/FiveStageCoreTest.scala:6:33: type FreeSpec in package scalatest is deprecated (since 3.1.0): The org.scalatest.FreeSpec trait has been moved and renamed. Please use org.scalatest.freespec.AnyFreeSpec instead. This can be rewritten automatically with autofix: https://github.com/scalatest/autofix/tree/master/3.1.x[0m
-[0m[[0m[33mwarn[0m] [0m[0mclass FiveStageCoreTest extends FreeSpec with ChiselScalatestTester[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
