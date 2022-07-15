@@ -14,7 +14,7 @@ class Decoder_IO extends Bundle
     val rs2: UInt = Output(UInt(5.W))
     val func7: UInt = Output(UInt(7.W))
     val imm: SInt = Output(SInt(32.W))
-    val id: UInt = Output(UInt(5.W))
+    val id: UInt = Output(UInt(7.W))
     val write_en: Bool = Output(Bool())
 }
 class Decoder extends Module
@@ -22,7 +22,7 @@ class Decoder extends Module
     // Initializing modules and signals
     val io: Decoder_IO = IO(new Decoder_IO())
     val inst = WireInit(io.in(31, 7))
-    val id: UInt = dontTouch(WireInit(io.in(6, 2)))
+    val id: UInt = dontTouch(WireInit(io.in(6, 0)))
     val r: R_Type = Module(new R_Type)
     val i: I_Type = Module(new I_Type)
     val s: S_Type = Module(new S_Type)
@@ -37,7 +37,7 @@ class Decoder extends Module
     val imm: SInt = dontTouch(WireInit(i.io.imm | s.io.imm | sb.io.imm | u.io.imm | uj.io.imm))
     val write_en: Bool = dontTouch(WireInit(
         Mux(
-            id === 0.U || id === 4.U || id === 5.U || id === 6.U || id === 12.U || id === 13.U || id === 14.U || id === 25.U || id === 27.U,
+            id === 3.U || id === 19.U || id === 23.U || id === 51.U || id === 55.U || id === 59.U || id === 103.U || id === 111.U,
             1.B,
             0.B
         )
@@ -50,7 +50,7 @@ class Decoder extends Module
     ) map (_ := inst)
     
     // Setting up the enables
-    when (id === 12.U || id === 14.U)  // Enabling R_Type
+    when (id === 51.U || id === 59.U)  // Enabling R_Type
     {
         Array(
             r.io.en,  i.io.en, s.io.en,
@@ -62,7 +62,7 @@ class Decoder extends Module
         {
             x => x._1 := x._2
         }
-    }.elsewhen (id === 0.U || id === 4.U || id === 25.U)  // Enabling I_Type
+    }.elsewhen (id === 3.U || id === 19.U || id === 103.U)  // Enabling I_Type
     {
         Array(
             r.io.en,  i.io.en, s.io.en,
@@ -74,7 +74,7 @@ class Decoder extends Module
             {
                 x => x._1 := x._2
             }
-    }.elsewhen (id === 8.U)  // Enabling S_Type
+    }.elsewhen (id === 35.U)  // Enabling S_Type
     {
         Array(
             r.io.en,  i.io.en, s.io.en,
@@ -86,7 +86,7 @@ class Decoder extends Module
             {
                 x => x._1 := x._2
             }
-    }.elsewhen (id === 24.U)  // Enabling SB_Type
+    }.elsewhen (id === 99.U)  // Enabling SB_Type
     {
         Array(
             r.io.en,  i.io.en, s.io.en,
@@ -98,7 +98,7 @@ class Decoder extends Module
             {
                 x => x._1 := x._2
             }
-    }.elsewhen(id === 5.U || id === 13.U)  // Enabling U_Type
+    }.elsewhen(id === 23.U || id === 55.U)  // Enabling U_Type
     {
         Array(
             r.io.en,  i.io.en, s.io.en,
@@ -110,7 +110,7 @@ class Decoder extends Module
             {
                 x => x._1 := x._2
             }
-    }.elsewhen (id === 27.U)  // Enabling UJ_Type
+    }.elsewhen (id === 111.U)  // Enabling UJ_Type
     {
         Array(
             r.io.en,  i.io.en, s.io.en,

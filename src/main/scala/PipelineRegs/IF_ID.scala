@@ -18,9 +18,9 @@ class IF_ID extends Module
 {
     // Initializing modules and wires
     val io: IF_ID_IO = IO(new IF_ID_IO)
-    val PC: UInt = dontTouch(RegInit(io.PC_in))
-    val nPC: UInt = dontTouch(RegInit(io.nPC_in))
-    val inst: UInt = dontTouch(RegInit(io.inst_in))
+    val PC: UInt = dontTouch(RegInit(0.U(32.W)))
+    val nPC: UInt = dontTouch(RegInit(0.U(32.W)))
+    val inst: UInt = dontTouch(RegInit(0.U(32.W)))
     
     // Wiring the modules
     Array(
