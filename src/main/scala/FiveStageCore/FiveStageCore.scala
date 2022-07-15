@@ -90,14 +90,14 @@ class FiveStageCore extends Module
         RegFile.io.rd_addr,             RegFile.io.rs1_addr,            RegFile.io.rs2_addr,
         RegFile.io.rd_data,             RegFile.io.write_en,
 
+        // Control Unit
+        ControlUnit.io.id,
+
         // ID_EX
         ID_EX.io.PC_in,                 ID_EX.io.nPC_in,                ID_EX.io.rd_addr_in,                          ID_EX.io.func3_in,     ID_EX.io.rs1_addr_in,
         ID_EX.io.rs2_addr_in,           ID_EX.io.rs1_data_in,           ID_EX.io.rs2_data_in,                         ID_EX.io.func7_in,     ID_EX.io.imm_in,
         ID_EX.io.ld_en_in,              ID_EX.io.str_en_in,             ID_EX.io.op2sel_in,                           ID_EX.io.br_en_in,     ID_EX.io.jal_in,
         ID_EX.io.jalr_in,               ID_EX.io.lui_in,                ID_EX.io.auipc_in,                            ID_EX.io.id_in,        ID_EX.io.write_en_in,
-        
-        // Control Unit
-        ControlUnit.io.id,
         
         // ALU
         ALU.io.ID_EX_rs1_data,          ALU.io.EX_MEM_alu_out,          ALU.io.func3,                                 ALU.io.rd_data,
@@ -134,14 +134,14 @@ class FiveStageCore extends Module
         MEM_WB.io.rd_addr_out,          Decoder.io.rs1,                 Decoder.io.rs2,
         rd_data,                        MEM_WB.io.write_en_out,
 
+        // Control Unit
+        Decoder.io.id,
+
         // ID_EX
         IF_ID.io.PC_out,                IF_ID.io.nPC_out,               Decoder.io.rd,                                Decoder.io.func3,      Decoder.io.rs1,
         Decoder.io.rs2,                 RegFile.io.rs1_data,            RegFile.io.rs2_data,                          Decoder.io.func7,      Decoder.io.imm,
         ControlUnit.io.ld_en,           ControlUnit.io.str_en,          ControlUnit.io.op2sel,                        ControlUnit.io.br_en,  ControlUnit.io.jal,
         ControlUnit.io.jalr,            ControlUnit.io.lui,             ControlUnit.io.auipc,                         Decoder.io.id,         Decoder.io.write_en,
-        
-        // Control Unit
-        Decoder.io.id,
         
         // ALU
         ID_EX.io.rs1_data_out,          EX_MEM.io.alu_out,              ID_EX.io.func3_out,                           rd_data,

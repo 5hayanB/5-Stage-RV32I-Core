@@ -23,7 +23,7 @@ class ID_EX_IO extends Bundle
     val jalr_in: Bool = Input(Bool())
     val lui_in: Bool = Input(Bool())
     val auipc_in: Bool = Input(Bool())
-    val id_in: UInt = Input(UInt(5.W))
+    val id_in: UInt = Input(UInt(7.W))
     val write_en_in: Bool = Input(Bool())
     
     // Output pins
@@ -45,33 +45,33 @@ class ID_EX_IO extends Bundle
     val jalr_out: Bool = Output(Bool())
     val lui_out: Bool = Output(Bool())
     val auipc_out: Bool = Output(Bool())
-    val id_out: UInt = Output(UInt(5.W))
+    val id_out: UInt = Output(UInt(7.W))
     val write_en_out: Bool = Output(Bool())
 }
 class ID_EX extends Module
 {
     // Initializing the wires and modules
     val io: ID_EX_IO = IO(new ID_EX_IO)
-    val PC: UInt = dontTouch(RegInit(io.PC_in))
-    val nPC: UInt = dontTouch(RegInit(io.nPC_in))
-    val rd_addr: UInt = dontTouch(RegInit(io.rd_addr_in))
-    val func3: UInt = dontTouch(RegInit(io.func3_in))
-    val rs1_addr: UInt = dontTouch(RegInit(io.rs1_addr_in))
-    val rs2_addr: UInt = dontTouch(RegInit(io.rs2_addr_in))
-    val rs1_data: SInt = dontTouch(RegInit(io.rs1_data_in))
-    val rs2_data: SInt = dontTouch(RegInit(io.rs2_data_in))
-    val func7: UInt = dontTouch(RegInit(io.func7_in))
-    val imm: SInt = dontTouch(RegInit(io.imm_in))
-    val ld_en: Bool = dontTouch(RegInit(io.ld_en_in))
-    val str_en: Bool = dontTouch(RegInit(io.str_en_in))
-    val op2sel: Bool = dontTouch(RegInit(io.op2sel_in))
-    val br_en: Bool = dontTouch(RegInit(io.br_en_in))
-    val jal: Bool = dontTouch(RegInit(io.jal_in))
-    val jalr: Bool = dontTouch(RegInit(io.jalr_in))
-    val lui: Bool = dontTouch(RegInit(io.lui_in))
-    val auipc: Bool = dontTouch(RegInit(io.auipc_in))
-    val id: UInt = dontTouch(RegInit(io.id_in))
-    val write_en: Bool = dontTouch(RegInit(io.write_en_in))
+    val PC: UInt = dontTouch(RegInit(0.U(32.W)))
+    val nPC: UInt = dontTouch(RegInit(0.U(32.W)))
+    val rd_addr: UInt = dontTouch(RegInit(0.U(5.W)))
+    val func3: UInt = dontTouch(RegInit(0.U(3.W)))
+    val rs1_addr: UInt = dontTouch(RegInit(0.U(5.W)))
+    val rs2_addr: UInt = dontTouch(RegInit(0.U(5.W)))
+    val rs1_data: SInt = dontTouch(RegInit(0.S(32.W)))
+    val rs2_data: SInt = dontTouch(RegInit(0.S(32.W)))
+    val func7: UInt = dontTouch(RegInit(0.U(7.W)))
+    val imm: SInt = dontTouch(RegInit(0.S(32.W)))
+    val ld_en: Bool = dontTouch(RegInit(0.B))
+    val str_en: Bool = dontTouch(RegInit(0.B))
+    val op2sel: Bool = dontTouch(RegInit(0.B))
+    val br_en: Bool = dontTouch(RegInit(0.B))
+    val jal: Bool = dontTouch(RegInit(0.B))
+    val jalr: Bool = dontTouch(RegInit(0.B))
+    val lui: Bool = dontTouch(RegInit(0.B))
+    val auipc: Bool = dontTouch(RegInit(0.B))
+    val id: UInt = dontTouch(RegInit(0.U(7.W)))
+    val write_en: Bool = dontTouch(RegInit(0.B))
     
     // Wiring the modules
     Array(
@@ -103,24 +103,3 @@ class ID_EX extends Module
         x => x._1 := x._2
     }
 }
-
-// PC,
-//         nPC,
-//         rd_addr,
-//         func3,
-//         rs1_addr,
-//         rs2_addr,
-//         rs1_data,
-//         rs2_data,
-//         func7,
-//         imm,
-//         ld_en,
-//         str_en,
-//         op2sel,
-//         br_en,
-//         jal,
-//         jalr,
-//         lui,
-//         auipc,
-//         id,
-//         write_en
