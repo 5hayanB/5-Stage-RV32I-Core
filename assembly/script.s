@@ -10,7 +10,6 @@
 # END:
 
 addi x2, x0, 5
-addi x7, x0, 6
-addi x8, x0, 9
 sw x2, 0(x0)
 lw x3, 0(x0)
+addi x4, x3, 1

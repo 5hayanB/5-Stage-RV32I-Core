@@ -12,7 +12,7 @@ class ALU_IO extends Bundle
     val rd_data: SInt = Input(SInt(32.W))
     val func3: UInt = Input(UInt(3.W))
     val func7: UInt = Input(UInt(7.W))
-    val id: UInt = Input(UInt(5.W))
+    val id: UInt = Input(UInt(7.W))
     val forward_op1: UInt = Input(UInt(2.W))
 
     // Outputs
@@ -28,7 +28,7 @@ class ALU extends Module
             2.U -> io.rd_data
         ))
     ))
-    val opSel: UInt = dontTouch(WireInit(Cat(io.id(2), io.func7(5), io.func3)))
+    val opSel: UInt = dontTouch(WireInit(Cat(io.func7, io.func3, io.id)))
     val add: SInt = dontTouch(WireInit(op1 + io.op2))
     val sub: SInt = dontTouch(WireInit(op1 - io.op2))
     val sll: SInt = dontTouch(WireInit((op1 << io.op2(18, 0).asUInt()).asSInt()))
@@ -48,20 +48,20 @@ class ALU extends Module
     io.out := MuxCase(
         0.S,
         Array(
-            (opSel === 2.U || opSel === 16.U) -> add,
-            (opSel === 24.U) -> sub,
-            (opSel === 17.U) -> sll,
-            (opSel === 4.U || opSel === 18.U) -> lt,
-            (opSel === 6.U || opSel === 19.U) -> ltu,
-            (opSel === 20.U) -> xor,
-            (opSel === 21.U) -> srl,
-            (opSel === 29.U) -> sra,
-            (opSel === 22.U) -> or,
-            (opSel === 23.U) -> and,
-            (opSel === 0.U) -> beq,
-            (opSel === 5.U) -> bge,
-            (opSel === 7.U) -> bgeu,
-            (opSel === 1.U) -> bne
+            (opSel === 51.U || opSel === 259.U || opSel === 19.U || opSel === 291.U) -> add,
+            (opSel === 32819.U) -> sub,
+            (opSel === 179.U) -> sll,
+            (opSel === 307.U || opSel === 275.U || opSel === 611.U) -> lt,
+            (opSel === 867.U || opSel === 435.U || opSel === 403.U) -> ltu,
+            (opSel === 531.U || opSel === 563.U) -> xor,
+            (opSel === 1331.U || opSel === 659.U) -> srl,
+            (opSel === 33427.U || opSel === 33459.U) -> sra,
+            (opSel === 819.U || opSel === 787.U) -> or,
+            (opSel === 915.U || opSel === 947.U) -> and,
+            (opSel === 99.U) -> beq,
+            (opSel === 739.U) -> bge,
+            (opSel === 995.U) -> bgeu,
+            (opSel === 227.U) -> bne
         )
     )
 }

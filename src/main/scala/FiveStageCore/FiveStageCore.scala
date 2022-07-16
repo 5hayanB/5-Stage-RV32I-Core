@@ -26,6 +26,7 @@ class FiveStageCore extends Module
     val EX_MEM: EX_MEM = Module(new EX_MEM)
     val MEM_WB: MEM_WB = Module(new MEM_WB)
     val ForwardUnit: ForwardUnit = Module(new ForwardUnit)
+    val HazardDetection = Module(new HazardDetection)
     val inst_memory: Mem[UInt] = Mem(1024, UInt(32.W))
     val ld_str_memory: Mem[SInt] = Mem(1024, SInt(32.W))
     val nPC: UInt = WireInit(Mux(
@@ -78,10 +79,42 @@ class FiveStageCore extends Module
             )
         ))
     }
+
+    // IF_ID
+    when(HazardDetection.io.forward_inst === 1.B)
+    {
+        IF_ID.io.inst_in := HazardDetection.io.inst_out
+        IF_ID.io.PC_in := HazardDetection.io.current_PC_out
+    }.otherwise
+    {
+        IF_ID.io.inst_in := inst_memory.read(Fetch.io.inst_out)
+        IF_ID.io.PC_in := Fetch.io.PC_out
+    }
+
+    // Stall
+    when (HazardDetection.io.forward_ctrl === 1.B)
+    {
+        Array(
+            ID_EX.io.ld_en_in,              ID_EX.io.str_en_in,             ID_EX.io.op2sel_in,                           ID_EX.io.br_en_in,     ID_EX.io.jal_in,
+            ID_EX.io.jalr_in,               ID_EX.io.lui_in,                ID_EX.io.auipc_in,                            ID_EX.io.write_en_in
+        ) map ( _ := 0.B )
+    }.otherwise
+    {
+        Array(
+            ID_EX.io.ld_en_in,              ID_EX.io.str_en_in,             ID_EX.io.op2sel_in,                           ID_EX.io.br_en_in,     ID_EX.io.jal_in,
+            ID_EX.io.jalr_in,               ID_EX.io.lui_in,                ID_EX.io.auipc_in,                            ID_EX.io.write_en_in
+        ) zip Array(
+            ControlUnit.io.ld_en,           ControlUnit.io.str_en,          ControlUnit.io.op2sel,                        ControlUnit.io.br_en,  ControlUnit.io.jal,
+            ControlUnit.io.jalr,            ControlUnit.io.lui,             ControlUnit.io.auipc,                         Decoder.io.write_en
+        ) foreach
+        {
+            z => z._1 := z._2
+        }
+    }
     
     Array(  // Inputs
         // IF_ID
-        IF_ID.io.PC_in,                 IF_ID.io.nPC_in,                IF_ID.io.inst_in,
+        IF_ID.io.nPC_in,
         
         // Decoder
         Decoder.io.in,
@@ -96,15 +129,14 @@ class FiveStageCore extends Module
         // ID_EX
         ID_EX.io.PC_in,                 ID_EX.io.nPC_in,                ID_EX.io.rd_addr_in,                          ID_EX.io.func3_in,     ID_EX.io.rs1_addr_in,
         ID_EX.io.rs2_addr_in,           ID_EX.io.rs1_data_in,           ID_EX.io.rs2_data_in,                         ID_EX.io.func7_in,     ID_EX.io.imm_in,
-        ID_EX.io.ld_en_in,              ID_EX.io.str_en_in,             ID_EX.io.op2sel_in,                           ID_EX.io.br_en_in,     ID_EX.io.jal_in,
-        ID_EX.io.jalr_in,               ID_EX.io.lui_in,                ID_EX.io.auipc_in,                            ID_EX.io.id_in,        ID_EX.io.write_en_in,
+        ID_EX.io.id_in,
         
         // ALU
         ALU.io.ID_EX_rs1_data,          ALU.io.EX_MEM_alu_out,          ALU.io.func3,                                 ALU.io.rd_data,
         ALU.io.func7,                   ALU.io.id,                      ALU.io.forward_op1,
         
         // EX_MEM
-        EX_MEM.io.ld_en_in,             EX_MEM.io.str_en_in,            EX_MEM.io.alu_in,                             EX_MEM.io.rs2_data_in, EX_MEM.io.rd_addr_in,
+        EX_MEM.io.ld_en_in,             EX_MEM.io.str_en_in,            EX_MEM.io.alu_in,                             EX_MEM.io.rd_addr_in,
         EX_MEM.io.br_en_in,             EX_MEM.io.jal_in,               EX_MEM.io.jalr_in,                            EX_MEM.io.lui_in,      EX_MEM.io.auipc_in,
         EX_MEM.io.nPC_in,               EX_MEM.io.rs1_data_in,          EX_MEM.io.imm_in,                             EX_MEM.io.PC_in,       EX_MEM.io.write_en_in,
         
@@ -118,14 +150,18 @@ class FiveStageCore extends Module
         WriteBack.io.br_en,             WriteBack.io.nPC,               WriteBack.io.nPC_en,
         
         // Fetch
-        Fetch.io.nPC_in,                Fetch.io.nPC_en,
+        Fetch.io.nPC_in,                Fetch.io.nPC_en,                Fetch.io.forward_PC_in,                       Fetch.io.HazardDetection_PC_in,
         
         // Forward Unit
         ForwardUnit.io.EX_MEM_rd_addr,  ForwardUnit.io.EX_MEM_write_en, ForwardUnit.io.MEM_WB_rd_addr,
-        ForwardUnit.io.MEM_WB_write_en, ForwardUnit.io.ID_EX_rs1_addr,        ForwardUnit.io.ID_EX_rs2_addr
+        ForwardUnit.io.MEM_WB_write_en, ForwardUnit.io.ID_EX_rs1_addr,  ForwardUnit.io.ID_EX_rs2_addr,
+
+        // Hazard Detection
+        HazardDetection.io.IF_ID_inst_in, HazardDetection.io.ID_EX_ld_en_in, HazardDetection.io.ID_EX_rd_addr_in, HazardDetection.io.PC_in,
+        HazardDetection.io.current_PC_in
     ) zip Array(  // Corresponding input wires
         // IF_ID
-        Fetch.io.PC_out,                Fetch.io.nPC_out,               inst_memory.read(Fetch.io.inst_out),
+        Fetch.io.nPC_out,
         
         // Decoder
         IF_ID.io.inst_out,
@@ -140,15 +176,14 @@ class FiveStageCore extends Module
         // ID_EX
         IF_ID.io.PC_out,                IF_ID.io.nPC_out,               Decoder.io.rd,                                Decoder.io.func3,      Decoder.io.rs1,
         Decoder.io.rs2,                 RegFile.io.rs1_data,            RegFile.io.rs2_data,                          Decoder.io.func7,      Decoder.io.imm,
-        ControlUnit.io.ld_en,           ControlUnit.io.str_en,          ControlUnit.io.op2sel,                        ControlUnit.io.br_en,  ControlUnit.io.jal,
-        ControlUnit.io.jalr,            ControlUnit.io.lui,             ControlUnit.io.auipc,                         Decoder.io.id,         Decoder.io.write_en,
+        Decoder.io.id,
         
         // ALU
         ID_EX.io.rs1_data_out,          EX_MEM.io.alu_out,              ID_EX.io.func3_out,                           rd_data,
         ID_EX.io.func7_out,             ID_EX.io.id_out,                ForwardUnit.io.forward_op1,
         
         // EX_MEM
-        ID_EX.io.ld_en_out,             ID_EX.io.str_en_out,            ALU.io.out,                                   ID_EX.io.rs2_data_out, ID_EX.io.rd_addr_out,
+        ID_EX.io.ld_en_out,             ID_EX.io.str_en_out,            ALU.io.out,                                   ID_EX.io.rd_addr_out,
         ID_EX.io.br_en_out,             ID_EX.io.jal_out,               ID_EX.io.jalr_out,                            ID_EX.io.lui_out,      ID_EX.io.auipc_out,
         ID_EX.io.nPC_out,               ID_EX.io.rs1_data_out,          ID_EX.io.imm_out,                             ID_EX.io.PC_out,       ID_EX.io.write_en_out,
         
@@ -163,10 +198,14 @@ class FiveStageCore extends Module
         
         // Fetch
         nPC,                            MEM_WB.io.jal_out || MEM_WB.io.jalr_out || MEM_WB.io.br_en_out,
+        HazardDetection.io.forward_PC,  HazardDetection.io.PC_out,
         
         // Forward Unit
         EX_MEM.io.rd_addr_out,          EX_MEM.io.write_en_out,         MEM_WB.io.rd_addr_out,
-        MEM_WB.io.write_en_out,         ID_EX.io.rs1_addr_out,          ID_EX.io.rs2_addr_out
+        MEM_WB.io.write_en_out,         ID_EX.io.rs1_addr_out,          ID_EX.io.rs2_addr_out,
+
+        // Hazard Detection
+        IF_ID.io.inst_out,              ID_EX.io.ld_en_out,             ID_EX.io.rd_addr_out,                         IF_ID.io.nPC_out,      IF_ID.io.PC_out
     ) foreach
     {
         x => x._1 := x._2
