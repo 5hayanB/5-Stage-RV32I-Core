@@ -1,1 +1,104 @@
 [0m[[0m[33mwarn[0m] [0m[0m'-P:chiselplugin:useBundlePlugin' is now default behavior, you can stop using the scalacOption.[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/FiveStageCore/FiveStageCore.scala:164:9: not found: value BranchUnit[0m
+[0m[[0m[31merror[0m] [0m[0m        BranchUnit.io.rs1_data_in,       BranchUnit.io.rs2_data_in,      BranchUnit.io.func3_in[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/FiveStageCore/FiveStageCore.scala:164:42: not found: value BranchUnit[0m
+[0m[[0m[31merror[0m] [0m[0m        BranchUnit.io.rs1_data_in,       BranchUnit.io.rs2_data_in,      BranchUnit.io.func3_in[0m
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/FiveStageCore/FiveStageCore.scala:164:74: not found: value BranchUnit[0m
+[0m[[0m[31merror[0m] [0m[0m        BranchUnit.io.rs1_data_in,       BranchUnit.io.rs2_data_in,      BranchUnit.io.func3_in[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:19:13: value in_func3 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_func3 === "b000".U) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:21:13: value in_rs1 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 === io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:21:27: value in_rs2 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 === io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:22:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 1.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:24:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:26:20: value in_func3 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    } .elsewhen(io.in_func3 === "b001".U) {[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:28:13: value in_rs1 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 =/= io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:28:27: value in_rs2 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 =/= io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:29:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 1.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:31:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:33:20: value in_func3 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    } .elsewhen(io.in_func3 === "b100".U) {[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:35:13: value in_rs1 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 < io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:35:25: value in_rs2 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 < io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:36:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 1.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:38:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:40:20: value in_func3 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    } .elsewhen(io.in_func3 === "b101".U) {[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:42:13: value in_rs1 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 >= io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:42:26: value in_rs2 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1 >= io.in_rs2) {[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:43:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 1.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:45:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:47:20: value in_func3 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    } .elsewhen(io.in_func3 === "b110".U) {[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:49:13: value in_rs1 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1.asUInt < io.in_rs2.asUInt) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:49:32: value in_rs2 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1.asUInt < io.in_rs2.asUInt) {[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:50:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 1.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:52:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:54:20: value in_func3 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    } .elsewhen(io.in_func3 === "b111".U) {[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:56:13: value in_rs1 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1.asUInt >= io.in_rs2.asUInt) {[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:56:33: value in_rs2 is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    when(io.in_rs1.asUInt >= io.in_rs2.asUInt) {[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:57:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 1.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:59:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/cybergai/Repositories/5-Stage-RV32I-Core/src/main/scala/HazardModules/BranchUnit.scala:62:8: value output is not a member of HazardModules.BranchUnit_IO[0m
+[0m[[0m[31merror[0m] [0m[0m    io.output := 0.U[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m34 errors found[0m

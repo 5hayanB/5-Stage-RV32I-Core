@@ -158,7 +158,10 @@ class FiveStageCore extends Module
 
         // Hazard Detection
         HazardDetection.io.IF_ID_inst_in, HazardDetection.io.ID_EX_ld_en_in, HazardDetection.io.ID_EX_rd_addr_in, HazardDetection.io.PC_in,
-        HazardDetection.io.current_PC_in
+        HazardDetection.io.current_PC_in,
+
+        // BranchUnit
+        BranchUnit.io.rs1_data_in,       BranchUnit.io.rs2_data_in,      BranchUnit.io.func3_in
     ) zip Array(  // Corresponding input wires
         // IF_ID
         Fetch.io.nPC_out,
@@ -205,7 +208,10 @@ class FiveStageCore extends Module
         MEM_WB.io.write_en_out,         ID_EX.io.rs1_addr_out,          ID_EX.io.rs2_addr_out,
 
         // Hazard Detection
-        IF_ID.io.inst_out,              ID_EX.io.ld_en_out,             ID_EX.io.rd_addr_out,                         IF_ID.io.nPC_out,      IF_ID.io.PC_out
+        IF_ID.io.inst_out,              ID_EX.io.ld_en_out,             ID_EX.io.rd_addr_out,                         IF_ID.io.nPC_out,      IF_ID.io.PC_out,
+
+        // Branch Unit
+        RegFile.io.rs1_data,            RegFile.io.rs2_data,            Decoder
     ) foreach
     {
         x => x._1 := x._2
